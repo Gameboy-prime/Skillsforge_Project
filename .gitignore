@@ -70,3 +70,55 @@ crashlytics-build.properties
 # Temporary auto-generated Android Assets
 /[Aa]ssets/[Ss]treamingAssets/aa.meta
 /[Aa]ssets/[Ss]treamingAssets/aa/*
+
+#Custom that i added
+*.prefab
+*.mat
+*.asset
+*.anim
+*.controller
+*.png
+*.jpg
+*.tga
+*.mp3
+*.wav
+*.ttf
+*.otf
+*.dll
+*.json
+*.xml
+*.shader
+*.meta
+*.fbx
+*.physicsMaterial2D
+*.overrideController
+*.unitypackage
+*.bytes
+*.terrainlayer
+*.terraindata
+*.tif
+*.brush
+*.tiff
+
+*.exr
+*.pdf
+*.lighting
+*.psd
+*.flare
+*pdf
+*.shadersubgraph.
+
+*.meta
+*.txt
+*.shadersubgraph
+*.renderTexture
+
+Skillsforge Project/Assets/UnityTechnologies/ParticlePack/EffectExamples/Misc Effects/Scripts/SpawnEffect.cs
+Skillsforge Project/Assets/UnityTechnologies/ParticlePack/Shared/Ramps/Editor/RampAssetEditor.cs
+Skillsforge Project/Assets/UnityTechnologies/ParticlePack/Shared/Ramps/Runtime/RampAsset.cs
+Skillsforge Project/Assets/UnityTechnologies/ParticlePack/Shared/Scripts/AdjustTimeScale.cs
+Skillsforge Project/Assets/UnityTechnologies/ParticlePack/Shared/Scripts/ProximityActivate.cs
+Skillsforge Project/Assets/UnityTechnologies/ParticlePack/Shared/Scripts/SimpleCameraController.cs
+Skillsforge Project/Assets/UnityTechnologies/ParticlePack/Shared/Scripts/SimpleCharacterMotor.cs
+Skillsforge Project/Assets/UnityTechnologies/ParticlePack/TutorialInfo/Scripts/Editor/ReadmeEditor.cs
+Skillsforge Project/Assets/UnityTechnologies/ParticlePack/TutorialInfo/Scripts/Readme.cs
