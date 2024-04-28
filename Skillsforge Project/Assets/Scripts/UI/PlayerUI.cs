@@ -6,6 +6,8 @@ using TMPro;
 public class PlayerUI : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI cloneNum;
+
+    [SerializeField] private TextMeshProUGUI zombieNum;
     // Start is called before the first frame update
     void Start()
     {
@@ -17,6 +19,7 @@ public class PlayerUI : MonoBehaviour
     void Update()
     {
         cloneNum.text = CloneMultiplier.playerNum.ToString();
+        zombieNum.text= CloneMultiplier.ZombieNum.ToString();
         
     }
 }

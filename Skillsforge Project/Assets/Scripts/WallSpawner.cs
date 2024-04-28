@@ -41,6 +41,8 @@ public class WallSpawner : MonoBehaviour
         
     }
 
+    
+
 
     public void Spawn()
     {
@@ -63,6 +65,8 @@ public class WallSpawner : MonoBehaviour
 
     private void Start()
     {
+        rad = 5 - (Difficulty.difficulty/2);
+        Spawn();
         //InvokeRepeating(nameof(Spawn), rad, rad);
     }
 
