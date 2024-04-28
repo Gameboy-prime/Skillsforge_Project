@@ -7,6 +7,7 @@ public class GroundMove : MonoBehaviour
     public float moveSpeed;    // Start is called before the first frame update
     void Start()
     {
+        moveSpeed = Difficulty.difficulty *2.5f;
         
     }
 
