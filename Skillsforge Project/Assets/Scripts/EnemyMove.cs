@@ -6,6 +6,7 @@ using UnityEngine.AI;
 public class EnemyMove : MonoBehaviour
 {
     NavMeshAgent enemyAgent;
+    Animator anime;
     private Transform playerPos;
     public GameObject destroyEffect;
 
@@ -13,6 +14,7 @@ public class EnemyMove : MonoBehaviour
     void Start()
     {
         enemyAgent = GetComponent<NavMeshAgent>();
+        anime=GetComponentInChildren<Animator>();
         
     }
 
@@ -20,34 +22,64 @@ public class EnemyMove : MonoBehaviour
     void Update()
     {
         playerPos = FindObjectOfType<PlayerFight>().transform;
-        enemyAgent.SetDestination(playerPos.position);
+        if(enemyAgent != null && !CloneMultiplier.isDead)
+        {
+            enemyAgent.SetDestination(playerPos.position);
+
+        }
+
+        else
+        {
+            enemyAgent.SetDestination(playerPos.position+ new Vector3(0,0,-32));
+        }
+
+        
+        
         
     }
 
     private void OnTriggerEnter(Collider other)
     {
+        StartCoroutine(TriggerEnter(other));
         
-        if(other.CompareTag("Player Clone"))
+        
+    }
+
+    IEnumerator TriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Player Clone") && !CloneMultiplier.isDead)
         {
             this.GetComponent<CapsuleCollider>().enabled = false;
-            other.GetComponent<CapsuleCollider>().enabled = false ;
+            other.GetComponent<CapsuleCollider>().enabled = false;
             other.GetComponentInChildren<Animator>().SetTrigger("slash");
+
+            this.GetComponent<NavMeshAgent>().enabled = false;
+            other.GetComponent<NavMeshAgent>().enabled=false;
+
+            yield return new WaitForSeconds(2);
             //Debug.Log("Has entered player clone Trigger");
-            GameObject effect = Instantiate(destroyEffect, transform.position, Quaternion.identity);
+
             FindObjectOfType<CloneMultiplier>().spawnList.Remove(other.gameObject);
             FindObjectOfType<EnemySpawner>().enemyCount--;
-            
+
             if (CloneMultiplier.playerNum < 0)
             {
                 CloneMultiplier.playerNum = 0;
             }
-            Destroy(effect, .2f);
-
-            Destroy(other.gameObject, 1.1f);
             CloneMultiplier.playerNum -= 1;
+            CloneMultiplier.ZombieNum += 1;
+            anime.Play("Zombie Dying");
+            
+            other.GetComponentInChildren<Animator>().Play("Dying");
+            other.GetComponent<CloneMove>().enabled= false;
 
-            Destroy(gameObject,1.6f);
+            this.GetComponent<EnemyMove>().enabled = false;
+
+            
+
+            
 
         }
+
     }
 }

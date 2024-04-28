@@ -8,6 +8,7 @@ public class CloneMultiplier : MonoBehaviour
 {
 
     public static int playerNum;
+    public static int ZombieNum;
     public static bool isDead;
 
     private int previousPlayerNum=0;
@@ -26,6 +27,14 @@ public class CloneMultiplier : MonoBehaviour
     public GameObject playerClone;
     public GameObject player;
     public EnemySpawner enemySpawner;
+
+    public AudioSource fightClip;
+    public AudioSource source;
+    public AudioClip portalEnter;
+    public AudioClip spawnPlayer;
+
+    public GameObject gameOverBox;
+    public GameObject king;
 
     public List<GameObject> spawnList;
 
@@ -57,6 +66,7 @@ public class CloneMultiplier : MonoBehaviour
     {
         playerNum = 1;
         previousPlayerNum = 1;
+        ZombieNum= 0;
 
         spawnList.Add(player);
     }
@@ -65,10 +75,12 @@ public class CloneMultiplier : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-       // Debug.Log("has entered the instruction block");
+        
+        // Debug.Log("has entered the instruction block");
         if (other.CompareTag("Instruction Block"))
         {
-            //Debug.Log("has entered the instruction block");
+            source.PlayOneShot(portalEnter);
+            Debug.Log("has entered the instruction block");
             string determinant = other.GetComponent<Multiplier>().multiplierState;
             string[] instructionArray = determinant.Split(" ");
 
@@ -100,7 +112,7 @@ public class CloneMultiplier : MonoBehaviour
 
             if (playerNum <= 0)
             {
-                isDead= true;
+                
                 playerNum = 0;
                 Dying();
             }
@@ -111,22 +123,32 @@ public class CloneMultiplier : MonoBehaviour
 
         }
 
-        else if (other.CompareTag("Enemy"))
-        {
-            anime.Play("Stable Sword Outward Slash");
-        }
+        
 
 
     }
 
     public void Dying()
     {
+        isDead = true;
+        if (king.GetComponent<CapsuleCollider>()!=null)
+        {
+            king.GetComponent<CapsuleCollider>().enabled = false;
+
+        }
+        
+        Debug.Log("THe dying function has been called");
+        king.GetComponent<FightDetect>().enabled= false;
         player.GetComponent<CapsuleCollider>().enabled= false;
+        player.GetComponentInChildren<CapsuleCollider>().enabled= false;
         player.GetComponent<PlayerFight>().enabled = false;
         player.GetComponent<Movement>().enabled = false;
+        //player.GetComponent<CloneMultiplier>().enabled = false;
         anime.Play("Dying");
         wallSpawner.GetComponent<WallSpawner>().enabled = false;
         enemySpawner.GetComponent<EnemySpawner>().enabled = false;
+
+        gameOverBox.SetActive(true);
 
 
 
@@ -150,6 +172,8 @@ public class CloneMultiplier : MonoBehaviour
                // Debug.Log("Has despawned Player");
             }
         }
+
+        //Else increase the number of player based on the parameter gotten from the instruction block nj
         else
         {
             for (int i = 0; i < value ; i++)
@@ -157,7 +181,7 @@ public class CloneMultiplier : MonoBehaviour
                 Vector3 pos = new Vector3(UnityEngine.Random.Range(playerSpawnPos.position.x - 1.5f, playerSpawnPos.position.x + 2.8f), playerSpawnPos.position.y, UnityEngine.Random.Range(playerSpawnPos.position.z - .3f, 0));
                 GameObject playerObj = pool.Get();
                 spawnList.Add(playerObj);
-
+                source.PlayOneShot(spawnPlayer);
                 GameObject effect = Instantiate(playerSpawnEfffect, spawnList[i].transform.position, Quaternion.identity);
                 Destroy(effect, .1f);
                 playerObj.transform.position = pos;
