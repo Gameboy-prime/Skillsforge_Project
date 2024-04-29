@@ -11,7 +11,7 @@ I personally made a short video of the game and uploaded it to you tube, here is
 
 # Download the Android game
 Here is the link to download the Apk of the game
-(https://github.com/Craigshakesphere-Makinde/Skillsforge_Project/blob/main/Guardian%20of%20the%20citadel%3BRise%20of%20the%20Undead%202.zip)
+[Guardians Of the Citadel: Rise of the Undead](https://drive.google.com/file/d/15xTx1Qsc-UAmayDfp2cRR1s_FkSzKr6H/view?usp=drive_link)
 
 # Assest I used in the game
 Here is the Link to the google drive containing most of the Assests I used in the game
