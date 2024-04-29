@@ -11,7 +11,7 @@ I personally made a short video of the game and uploaded it to you tube, here is
 
 # Download the Android game
 Here is the link to the Apk of the game
-[Download ZIP] (https://github.com/Craigshakesphere-Makinde/Skillsforge_Project/blob/main/Guardian%20of%20the%20citadel%3BRise%20of%20the%20Undead%202.zip)
+(https://github.com/Craigshakesphere-Makinde/Skillsforge_Project/blob/main/Guardian%20of%20the%20citadel%3BRise%20of%20the%20Undead%202.zip)
 
 # Assest I used in the game
 Here is the Link to the google drive containing most of the Assests I used in the game
