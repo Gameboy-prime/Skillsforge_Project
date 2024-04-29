@@ -10,7 +10,7 @@ I personally made a short video of the game and uploaded it to you tube, here is
 [Guarians of the Citadel: Rise of the Undead](https://youtu.be/VvUw2dlETk8)
 
 # Download the Android game
-Here is the link to the Apk of the game
+Here is the link to download the Apk of the game
 (https://github.com/Craigshakesphere-Makinde/Skillsforge_Project/blob/main/Guardian%20of%20the%20citadel%3BRise%20of%20the%20Undead%202.zip)
 
 # Assest I used in the game
