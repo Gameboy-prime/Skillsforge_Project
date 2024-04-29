@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class Movement : MonoBehaviour
@@ -8,16 +9,50 @@ public class Movement : MonoBehaviour
     private Vector2 finalXPos;
     private Vector3 swipeVector;
     private bool isSwiping = false;
-    [SerializeField] private float checkSwipeDistance = .02f;
-    public float minimumSwipeDistance = .2f;
+    //[SerializeField] private float checkSwipeDistance = .02f;
+    public float minimumSwipeDistance = .3f;
 
     private bool canSwipe;
+
+    private bool isMoving;
 
 
     // Update is called once per frame
     void Update()
     {
         //Inputs
+        
+
+
+        KeyBoardControls();
+
+
+    }
+
+
+    //This is if the controls are from a keyboard
+    private void KeyBoardControls()
+    {
+        if (this.transform.position.x < Boundary.rightMove && Input.GetKeyDown(KeyCode.RightArrow))
+        {
+            transform.Translate(new Vector3(6, 0, 0));
+
+
+        }
+        if (this.transform.position.x > Boundary.leftMove && Input.GetKeyDown(KeyCode.LeftArrow))
+        {
+            transform.Translate(new Vector3(-6, 0, 0));
+
+        }
+
+    }
+
+    #region Swipe COntrols
+
+    
+
+    private void SwipeControls()
+    {
         if (Input.touchCount > 0 && !MenuManager.isPaused)
         {
             Touch touch = Input.GetTouch(0);
@@ -62,28 +97,6 @@ public class Movement : MonoBehaviour
             }
         }
 
-
-        KeyBoardControls();
-
-
-    }
-
-
-    //This is if the controls are from a keyboard
-    private void KeyBoardControls()
-    {
-        if (this.transform.position.x < Boundary.rightMove && Input.GetKeyDown(KeyCode.RightArrow))
-        {
-            transform.Translate(new Vector3(6, 0, 0));
-
-
-        }
-        if (this.transform.position.x > Boundary.leftMove && Input.GetKeyDown(KeyCode.LeftArrow))
-        {
-            transform.Translate(new Vector3(-6, 0, 0));
-
-        }
-
     }
 
     private void Swipe()
@@ -103,16 +116,65 @@ public class Movement : MonoBehaviour
                 //Swipe Left or Right
                 if (swipeVector.x > 0.0f && this.transform.position.x < Boundary.rightMove)
                 {
+                    //transform.position = Vector3.Lerp(transform.position, transform.position + new Vector3(6, 0, 0),Time.deltaTime*8);
 
-                    transform.Translate(new Vector3(6, 0, 0));
+                    StartCoroutine(MoveToTarget(this.transform.position + new Vector3(6, 0, 0)));
                 }
                 else if (swipeVector.x < 0.0f && this.transform.position.x > Boundary.leftMove)
                 {
-
-                    transform.Translate(new Vector3(-6, 0, 0));
+                    //transform.position = Vector3.Lerp(transform.position, transform.position + new Vector3(-6, 0, 0), Time.deltaTime*8);
+                    StartCoroutine(MoveToTarget(this.transform.position + new Vector3(-6, 0, 0)));
                 }
             }
         }
 
+    }
+
+    #endregion
+
+    #region Touch Controls
+
+    public void MoveLeft()
+    {
+        if (this.transform.position.x > Boundary.leftMove && !isMoving)
+        {
+            StartCoroutine(MoveToTarget(this.transform.position + new Vector3(-6, 0, 0)));
+
+
+        }
+
+
+    }
+
+    public void MoveRight()
+    {
+        if (this.transform.position.x < Boundary.rightMove && !isMoving)
+        {
+            StartCoroutine(MoveToTarget(this.transform.position + new Vector3(6, 0, 0)));
+
+
+        }
+        
+    }
+
+    #endregion
+
+
+
+    IEnumerator MoveToTarget(Vector3 targetPosition)
+    {
+        isMoving = true;
+        float elapsedTime = 0f;
+        Vector3 startPosition = transform.position;
+        Vector3 target = targetPosition;
+
+        while (elapsedTime < 1f)
+        {
+            transform.position = Vector3.Lerp(startPosition, target, elapsedTime);
+            elapsedTime += Time.deltaTime * 5;
+            yield return null;
+        }
+        transform.position = target;
+        isMoving= false;
     }
 }

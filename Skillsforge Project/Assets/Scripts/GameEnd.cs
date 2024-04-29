@@ -25,10 +25,18 @@ public class GameEnd : MonoBehaviour
             Debug.Log("Player has entered Trigger");
             endGame.GetComponent<EndGame>().enabled = false;
             gameOverBox.SetActive(true);
-            PlayerPrefs.SetFloat($"dificulty{Difficulty.difficulty + 1}", Difficulty.difficulty + 1);
+            float num = Difficulty.difficulty;
+            float check = PlayerPrefs.GetFloat("difficulty");
+
+            if(num>=check)
+            {
+                PlayerPrefs.SetFloat("difficulty", num+1);
+            }
+            
+            
            
             PlayerPrefs.Save();
-            Invoke(nameof(HeyEnd),2f);
+            Invoke(nameof(HeyEnd),.3f);
 
 
         }

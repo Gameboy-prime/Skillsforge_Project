@@ -45,12 +45,18 @@ public class EndGame : MonoBehaviour
 
     IEnumerator PhaseEnd()
     {
+        Multiplier[] multiplier = FindObjectsOfType<Multiplier>();
+
+        for(int i = 0; i < multiplier.Length; i++)
+        {
+            multiplier[i].GetComponent<BoxCollider>().enabled= false;
+        }
         wallSpawner.GetComponent<WallSpawner>().enabled = false;
 
         player.GetComponent<CapsuleCollider>().enabled = false ;
         player.GetComponent<Movement>().enabled = false;
-        //player.GetComponent<PlayerFight>().enabled = true;
-        player.GetComponent<PlayerFight>().Attack();
+        player.GetComponent<PlayerFight>().enabled = true;
+       // player.GetComponent<PlayerFight>().Attack();
         yield return new WaitForSeconds(1);
         source.PlayOneShot(ChargeClip);
         enemySpawner.EnemySpawn();

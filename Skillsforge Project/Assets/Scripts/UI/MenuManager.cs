@@ -31,7 +31,8 @@ public class MenuManager : MonoBehaviour
 
     public void Resume()
     {
-        isPaused= false;
+        Time.timeScale = 1f;
+        isPaused = false;
         sound.PlayClickSound();
         StartCoroutine(Resuming());
 
@@ -41,7 +42,7 @@ public class MenuManager : MonoBehaviour
     {
         pauseBox.SetActive(false);
         yield return new WaitForSeconds(.2f);
-        Time.timeScale = 1f;
+        
     }
 
     public void Restart()

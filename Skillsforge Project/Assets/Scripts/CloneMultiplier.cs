@@ -130,13 +130,17 @@ public class CloneMultiplier : MonoBehaviour
 
     public void Dying()
     {
+        
+
         isDead = true;
         if (king.GetComponent<CapsuleCollider>()!=null)
         {
             king.GetComponent<CapsuleCollider>().enabled = false;
 
         }
+
         
+
         Debug.Log("THe dying function has been called");
         king.GetComponent<FightDetect>().enabled= false;
         player.GetComponent<CapsuleCollider>().enabled= false;
@@ -152,6 +156,17 @@ public class CloneMultiplier : MonoBehaviour
 
 
 
+        Invoke(nameof(StopGroundMove), 1.2f);
+
+    }
+
+    public void StopGroundMove()
+    {
+        GroundMove[] groundMove = FindObjectsOfType<GroundMove>();
+        for (int i = 0; i < groundMove.Length; i++)
+        {
+            groundMove[i].GetComponent<GroundMove>().enabled = false;
+        }
     }
 
     IEnumerator SpawnPlayer(int num)

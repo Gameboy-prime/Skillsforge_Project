@@ -11,7 +11,7 @@ public class CloneMove : MonoBehaviour
     
     void Update()
     {
-        agent.SetDestination(playerPos.position + new Vector3(0,0,-1));
+        agent.SetDestination(playerPos.position + new Vector3(0,0,0));
         //agent.stoppingDistance = -1;
         transform.rotation= playerPos.rotation;
         

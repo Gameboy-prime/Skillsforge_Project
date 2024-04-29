@@ -10,10 +10,10 @@ public class LoadLevel : MonoBehaviour
     public GameObject UnlockableBox;
 
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
-        float value = PlayerPrefs.GetFloat($"dificulty{Difficulty.difficulty+1}");
-        if (value == levelDifficulty)
+        float value = PlayerPrefs.GetFloat("difficulty");
+        if (levelDifficulty<=value)
         {
             UnlockableBox.SetActive(false);
 
