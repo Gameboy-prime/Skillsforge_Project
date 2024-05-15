@@ -22,6 +22,11 @@ public class Multiplier : MonoBehaviour
     {
        // Debug.Log("CallDetermineState Function was called");
         string op = operators[Random.Range(0, 4)];
+
+        if(CloneMultiplier.playerNum>40 && op == "*")
+        {
+            op = "+";
+        }
         string value = Random.Range(1, 5).ToString();
         multiplierState = op + " " + value;
         textBox.text = multiplierState;

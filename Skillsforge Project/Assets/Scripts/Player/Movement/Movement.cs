@@ -9,6 +9,8 @@ public class Movement : MonoBehaviour
     private Vector2 finalXPos;
     private Vector3 swipeVector;
     private bool isSwiping = false;
+
+    public Sounds sound;
     //[SerializeField] private float checkSwipeDistance = .02f;
     public float minimumSwipeDistance = .3f;
 
@@ -35,13 +37,13 @@ public class Movement : MonoBehaviour
     {
         if (this.transform.position.x < Boundary.rightMove && Input.GetKeyDown(KeyCode.RightArrow))
         {
-            transform.Translate(new Vector3(6, 0, 0));
+            transform.Translate(new Vector3(1.5f, 0, 0));
 
 
         }
         if (this.transform.position.x > Boundary.leftMove && Input.GetKeyDown(KeyCode.LeftArrow))
         {
-            transform.Translate(new Vector3(-6, 0, 0));
+            transform.Translate(new Vector3(-1.5f, 0, 0));
 
         }
 
@@ -118,12 +120,12 @@ public class Movement : MonoBehaviour
                 {
                     //transform.position = Vector3.Lerp(transform.position, transform.position + new Vector3(6, 0, 0),Time.deltaTime*8);
 
-                    StartCoroutine(MoveToTarget(this.transform.position + new Vector3(6, 0, 0)));
+                    StartCoroutine(MoveToTarget(this.transform.position + new Vector3(1.5f, 0, 0)));
                 }
                 else if (swipeVector.x < 0.0f && this.transform.position.x > Boundary.leftMove)
                 {
                     //transform.position = Vector3.Lerp(transform.position, transform.position + new Vector3(-6, 0, 0), Time.deltaTime*8);
-                    StartCoroutine(MoveToTarget(this.transform.position + new Vector3(-6, 0, 0)));
+                    StartCoroutine(MoveToTarget(this.transform.position + new Vector3(-1.5f, 0, 0)));
                 }
             }
         }
@@ -136,9 +138,10 @@ public class Movement : MonoBehaviour
 
     public void MoveLeft()
     {
-        if (this.transform.position.x > Boundary.leftMove && !isMoving)
+        if (this.transform.position.x > Boundary.leftMove && !isMoving && !CloneMultiplier.isDead)
         {
-            StartCoroutine(MoveToTarget(this.transform.position + new Vector3(-6, 0, 0)));
+            sound.PlayClickSound();
+            StartCoroutine(MoveToTarget(this.transform.position + new Vector3(-1.5f, 0, 0)));
 
 
         }
@@ -148,9 +151,10 @@ public class Movement : MonoBehaviour
 
     public void MoveRight()
     {
-        if (this.transform.position.x < Boundary.rightMove && !isMoving)
+        if (this.transform.position.x < Boundary.rightMove && !isMoving && !CloneMultiplier.isDead && !EndGame.isFighting)
         {
-            StartCoroutine(MoveToTarget(this.transform.position + new Vector3(6, 0, 0)));
+            sound.PlayClickSound();
+            StartCoroutine(MoveToTarget(this.transform.position + new Vector3(1.5f, 0, 0)));
 
 
         }

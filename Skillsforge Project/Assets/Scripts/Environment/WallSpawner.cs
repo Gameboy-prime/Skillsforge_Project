@@ -51,6 +51,7 @@ public class WallSpawner : MonoBehaviour
         spawnee.transform.position = spawnPos.position;
         spawnee.transform.rotation = Quaternion.identity;
 
+
         //spawnPos.position += new Vector3(0, 0, 50);
 
     }

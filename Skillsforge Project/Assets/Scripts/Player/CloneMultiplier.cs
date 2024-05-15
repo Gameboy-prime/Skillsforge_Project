@@ -38,7 +38,12 @@ public class CloneMultiplier : MonoBehaviour
 
     public List<GameObject> spawnList;
 
-    
+    private void Update()
+    {
+        Debug.Log(isDead);
+    }
+
+
     private void Awake()
     {
         //Debug.Log("The clone Multiplayer script is working");
@@ -64,6 +69,7 @@ public class CloneMultiplier : MonoBehaviour
     }
     private void Start()
     {
+        isDead= false;
         playerNum = 1;
         previousPlayerNum = 1;
         ZombieNum= 0;
@@ -113,7 +119,8 @@ public class CloneMultiplier : MonoBehaviour
             if (playerNum <= 0)
             {
                 
-                playerNum = 0;
+                playerNum = 1;
+                StartCoroutine(SpawnPlayer(playerNum));
                 Dying();
             }
             else

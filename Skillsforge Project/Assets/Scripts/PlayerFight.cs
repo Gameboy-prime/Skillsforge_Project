@@ -16,8 +16,12 @@ public class PlayerFight : MonoBehaviour
 
         if (!CloneMultiplier.isDead)
         {
-            Vector3 pos= FindObjectOfType<EnemyMove>().transform.position;
-            agent.SetDestination(pos);
+            if (FindObjectOfType<EnemyMove>().transform.position != null)
+            {
+                Vector3 pos = FindObjectOfType<EnemyMove>().transform.position;
+                agent.SetDestination(pos);
+            }
+            
         }
 
 

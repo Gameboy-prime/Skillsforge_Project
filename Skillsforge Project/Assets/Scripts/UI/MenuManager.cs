@@ -47,7 +47,8 @@ public class MenuManager : MonoBehaviour
 
     public void Restart()
     {
-        Time.timeScale = 1; ;
+        Time.timeScale = 1;
+        
         sound.PlayClickSound();
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
 
@@ -78,7 +79,16 @@ public class MenuManager : MonoBehaviour
     {
         sound.PlayClickSound();
         quitBox.SetActive(false);
+        pauseBox.SetActive(true);
     }
 
-    
+    public void TutorialLevel()
+    {
+        sound.PlayClickSound();
+
+        SceneManager.LoadScene(3);
+    }
+
+
+
 }

@@ -40,12 +40,12 @@ public class TutorialEnemyMove : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        StartCoroutine(TriggerEnter(other));
+        //StartCoroutine(TriggerEnter(other));
 
 
     }
 
-    IEnumerator TriggerEnter(Collider other)
+    /*IEnumerator TriggerEnter(Collider other)
     {
         if (other.CompareTag("Player Clone") && !TutorialCloneMultiplier.isDead)
         {
@@ -81,5 +81,5 @@ public class TutorialEnemyMove : MonoBehaviour
 
         }
 
-    }
+    }*/
 }
