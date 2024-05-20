@@ -13,7 +13,15 @@ public class Bullet : MonoBehaviour
             DamageControl damageControl= other.GetComponent<DamageControl>();
             damageControl.TakeDamage(damage);
 
-            Destroy(gameObject);
+            
+
+            FindObjectOfType<weaponManager>().bulletPool.Release(gameObject);
+
+        }
+
+        if(other.CompareTag("Boundary"))
+        {
+            FindObjectOfType<weaponManager>().bulletPool.Release(gameObject);
         }
     }
 }
