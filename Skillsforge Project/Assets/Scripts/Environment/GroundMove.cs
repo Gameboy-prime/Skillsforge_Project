@@ -8,10 +8,10 @@ public class GroundMove : MonoBehaviour
     public float moveSpeed;    // Start is called before the first frame update
     void Start()
     {
-        if (SceneManager.GetActiveScene().buildIndex != 3)
+        /*if (SceneManager.GetActiveScene().buildIndex != 3)
         {
             moveSpeed = Difficulty.difficulty * 2.5f;
-        }
+        }*/
 
 
     }
