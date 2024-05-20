@@ -37,23 +37,13 @@ namespace DailyRewardSystem
          public GameObject rewardNotification;
        
 
-        [Space]
-
-        [Header("Reward Sprit")]
-        [SerializeField] Sprite coinSprite;
-        [SerializeField] Sprite flashSprite;
-
-
-        
 
         [Space]
         [Header("Timing")]
         [SerializeField] double rewardDelaySec = 20;
         [SerializeField] float checkForRewardDelay = 5;
 
-        [Space]
-        [Header("Effects")]
-        [SerializeField] ParticleSystem coinParticle;
+ 
        
        
         private void Start()
@@ -78,6 +68,8 @@ namespace DailyRewardSystem
             
 
         }
+
+        
 
         
 
