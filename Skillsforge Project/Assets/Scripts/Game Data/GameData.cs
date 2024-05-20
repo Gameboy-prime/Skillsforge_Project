@@ -7,6 +7,8 @@ public static class GameData
 
     public static int coins;
 
+    public static int currentGameCoin;
+
 
     static GameData()
     {
@@ -20,7 +22,10 @@ public static class GameData
         set { PlayerPrefs.SetInt("Coins", coins); }
     }
 
-    
+    public static void IncrementCoin()
+    {
+        currentGameCoin += 2;
+    }
 
     
 
