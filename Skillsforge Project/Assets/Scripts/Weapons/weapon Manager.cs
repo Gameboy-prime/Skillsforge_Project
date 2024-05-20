@@ -47,11 +47,15 @@ public class weaponManager : MonoBehaviour
         obj =>
         {
             obj.SetActive(true);
+           // obj.GetComponentInChildren<TrailRenderer>().enabled = true;
+            obj.GetComponent<Rigidbody>().isKinematic=false;
 
         },
         obj =>
         {
             obj.SetActive(false);
+            //obj.GetComponentInChildren<TrailRenderer>().enabled = false;
+            obj.GetComponent<Rigidbody>().isKinematic = true;
         },
         obj =>
         {
@@ -99,7 +103,7 @@ public class weaponManager : MonoBehaviour
                 GameObject bulletObject = bulletPool.Get();
                 bulletObject.transform.position = attackPoint.position;
                 bulletObject.transform.forward = directionWithSpread.normalized;
-                bulletObject.transform.rotation = Quaternion.Euler(90, 0, 0);
+                bulletObject.transform.rotation = Quaternion.Euler(-90, 0, 0);
                 bullet.GetComponent<Bullet>().damage = damage;
                 
 
@@ -108,7 +112,7 @@ public class weaponManager : MonoBehaviour
                 bulletObject.GetComponent<Rigidbody>().AddForce(directionWithSpread.normalized * upwardForce, ForceMode.Impulse);
 
 
-                Invoke("Releaser", 2f);
+                
                 bulletLeft--;
                 if (bulletShot < bulletPerTap)
                 {
@@ -122,14 +126,7 @@ public class weaponManager : MonoBehaviour
         
     }
 
-    public void Releaser(GameObject obj)
-    {
-        if (obj.activeInHierarchy)
-        {
-            bulletPool.Release(obj);
-        }
-        
-    }
+    
 
     
 }
