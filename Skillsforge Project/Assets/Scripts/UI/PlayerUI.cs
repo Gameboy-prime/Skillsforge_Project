@@ -5,21 +5,16 @@ using TMPro;
 
 public class PlayerUI : MonoBehaviour
 {
-    [SerializeField] private TextMeshProUGUI cloneNum;
+    [SerializeField] private TextMeshProUGUI currentGameCoin;
 
     [SerializeField] private TextMeshProUGUI zombieNum;
-    // Start is called before the first frame update
-    void Start()
-    {
-
-        
-    }
+    
 
     // Update is called once per frame
     void Update()
     {
-        cloneNum.text = CloneMultiplier.playerNum.ToString();
-        zombieNum.text= CloneMultiplier.ZombieNum.ToString();
+        currentGameCoin.text = GameData.currentGameCoin.ToString();
+        zombieNum.text= EnemySpawner.EnemyDeadCount.ToString();
         
     }
 }
