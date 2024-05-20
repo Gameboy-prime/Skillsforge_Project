@@ -15,10 +15,11 @@ public class Reward : MonoBehaviour
     [SerializeField] double rewardDelaySec = 20;
     [SerializeField] float checkForRewardDelay = 5;
 
-   
+
     [SerializeField] Button claimButton;
 
-    private int nextRewardIndex;
+    [SerializeField] GameObject noMoreRewardBox;
+    [SerializeField] ParticleSystem coinEffect;
     private bool isRewardReady = false;
 
 
@@ -34,8 +35,6 @@ public class Reward : MonoBehaviour
             PlayerPrefs.SetString($"StartRewardDateTime{rewardCoins}", dateTimeNow.ToString());
         }
 
-        claimButton.onClick.RemoveAllListeners();
-        claimButton.onClick.AddListener(Claim);
 
         int checkIfDayHasPassed = PlayerPrefs.GetInt($"Day{rewardDay}", 0);
 
@@ -43,6 +42,11 @@ public class Reward : MonoBehaviour
         {
             StartCoroutine(CheckForRewards());
 
+        }
+
+        else
+        {
+            noMoreRewardBox.SetActive(true);
         }
         
        
@@ -74,25 +78,29 @@ public class Reward : MonoBehaviour
     void ActivateReward()
     {
         isRewardReady=true;
+        claimButton.interactable = true;
+        
         dailyReward.rewardNotification.SetActive(true);
     }
 
     void DeactivateReward()
     {
         isRewardReady=false;
-        dailyReward.rewardNotification.SetActive(false);
+        claimButton.interactable = false;
+        
+        
     }
     // Start is called before the first frame update
 
 
     
 
-    void Claim()
+    public void Claim()
     {
         dailyReward.ClaimReward(rewardCoins);
         isRewardReady = false;
         dailyReward.rewardNotification.SetActive(false);
-        
+        noMoreRewardBox.SetActive(true);
 
         PlayerPrefs.SetInt($"Day{rewardDay}", 1);
 
