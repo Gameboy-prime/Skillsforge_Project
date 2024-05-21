@@ -6,11 +6,15 @@ using UnityEngine.Pool;
 public class Effects : MonoBehaviour
 {
     [SerializeField] GameObject bloodEffect;
-    public ObjectPool<GameObject> pool;
+    public ObjectPool<GameObject> bloodPool;
+
+
+    [SerializeField] GameObject stoneEffect;
+    public ObjectPool<GameObject> stonePool;
     // Start is called before the first frame update
     void Start()
     {
-        pool = new ObjectPool<GameObject>(() =>
+        bloodPool = new ObjectPool<GameObject>(() =>
         {
             return Instantiate(bloodEffect);
         },
@@ -28,6 +32,9 @@ public class Effects : MonoBehaviour
         {
             Destroy(obj.gameObject);
         }, true, 100, 200);
+
+       
+
 
     }
 

@@ -27,7 +27,7 @@ public class Multiplier : MonoBehaviour
         {
             op = "+";
         }
-        string value = Random.Range(1, 5).ToString();
+        string value = Random.Range(1, 3).ToString();
         multiplierState = op + " " + value;
         textBox.text = multiplierState;
 

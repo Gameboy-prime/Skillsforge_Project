@@ -45,9 +45,10 @@ public class DamageControl : MonoBehaviour
     IEnumerator Dying()
     {
         GetComponent<CapsuleCollider>().enabled = false;
-        anime.Play(deathAnimeString);
         GetComponent<NavMeshAgent>().enabled = false;
         GetComponent<EnemyMove>().enabled = false;
+        anime.Play(deathAnimeString);
+       
 
         EnemySpawner.EnemyDeadCount += 1;
         GameData.IncrementCoin();
@@ -77,11 +78,11 @@ public class DamageControl : MonoBehaviour
     IEnumerator ReleaseEffect()
     {
         //This portion is for the blood gush effect
-        GameObject effect = FindObjectOfType<Effects>().pool.Get();
+        GameObject effect = FindObjectOfType<Effects>().bloodPool.Get();
         effect.transform.position = transform.position;
         effect.transform.rotation = transform.rotation;
         yield return new WaitForSeconds(.3f);
-        FindObjectOfType<Effects>().pool.Release(effect);
+        FindObjectOfType<Effects>().bloodPool.Release(effect);
 
 
     }
