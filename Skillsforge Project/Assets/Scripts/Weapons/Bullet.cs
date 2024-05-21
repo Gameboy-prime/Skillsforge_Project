@@ -15,13 +15,20 @@ public class Bullet : MonoBehaviour
 
             
 
-            FindObjectOfType<weaponManager>().bulletPool.Release(gameObject);
+            FindObjectOfType<WeaponHandler>().bulletPool.Release(gameObject);
 
         }
 
         if(other.CompareTag("Boundary"))
         {
-            FindObjectOfType<weaponManager>().bulletPool.Release(gameObject);
+            FindObjectOfType<WeaponHandler>().bulletPool.Release(gameObject);
+        }
+
+        if (other.CompareTag("Boulder"))
+        {
+            BoulderDamageControl damageControl= other.GetComponent<BoulderDamageControl>();
+            damageControl.TakeDamage(damage);
+            FindObjectOfType<WeaponHandler>().bulletPool.Release(gameObject);
         }
     }
 }
