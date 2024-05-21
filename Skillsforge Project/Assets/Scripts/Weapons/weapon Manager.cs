@@ -5,9 +5,7 @@ using UnityEngine.Pool;
 
 public class weaponManager : MonoBehaviour
 {
-    [Header("Gun Object")]
-    [SerializeField] GameObject bullet;
-    [Space]
+    
 
     [Header("Bullet Parameter")]
     [SerializeField] float reloadTime, timeBetweenShooting,timeBetweenShots,range, spread;
@@ -33,34 +31,15 @@ public class weaponManager : MonoBehaviour
     private bool isReloading, shooting;
 
     private float elapsedTime;
+    public WeaponHandler weaponHandler;
 
-    public ObjectPool<GameObject> bulletPool;
+    
 
     // Start is called before the first frame update
     void Start()
     {
         
-        bulletPool = new ObjectPool<GameObject>(() =>
-        {
-            return Instantiate(bullet);
-        },
-        obj =>
-        {
-            obj.SetActive(true);
-           // obj.GetComponentInChildren<TrailRenderer>().enabled = true;
-            obj.GetComponent<Rigidbody>().isKinematic=false;
-
-        },
-        obj =>
-        {
-            obj.SetActive(false);
-            //obj.GetComponentInChildren<TrailRenderer>().enabled = false;
-            obj.GetComponent<Rigidbody>().isKinematic = true;
-        },
-        obj =>
-        {
-            Destroy(obj.gameObject);
-        }, true, 50, 70);
+        
 
         shooting = true;
         elapsedTime = timeBetweenShooting;
@@ -100,11 +79,11 @@ public class weaponManager : MonoBehaviour
 
                 //Instantiate the bullet game object
 
-                GameObject bulletObject = bulletPool.Get();
+                GameObject bulletObject = weaponHandler.bulletPool.Get();
                 bulletObject.transform.position = attackPoint.position;
                 bulletObject.transform.forward = directionWithSpread.normalized;
                 bulletObject.transform.rotation = Quaternion.Euler(-90, 0, 0);
-                bullet.GetComponent<Bullet>().damage = damage;
+                bulletObject.GetComponent<Bullet>().damage = damage;
                 
 
                 //Add the forces to the bullet
