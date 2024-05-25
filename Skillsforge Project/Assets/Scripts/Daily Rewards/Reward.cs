@@ -61,7 +61,7 @@ public class Reward : MonoBehaviour
                 DateTime dateTimeNow = DateTime.Now;
                 DateTime rewardDateTime = DateTime.Parse(PlayerPrefs.GetString("Reward_Next_DateTime", dateTimeNow.ToString()));
 
-                double elapsedSecs = (dateTimeNow - rewardDateTime).TotalSeconds;
+                double elapsedSecs = (dateTimeNow - rewardDateTime).TotalDays;
                 if (elapsedSecs > rewardDelaySec)
                 {
                     ActivateReward();
@@ -77,6 +77,7 @@ public class Reward : MonoBehaviour
 
     void ActivateReward()
     {
+        Debug.Log("The reward Notification has been activated");
         isRewardReady=true;
         claimButton.interactable = true;
         
