@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.Pool;
 
@@ -9,10 +10,16 @@ public class WallSpawner : MonoBehaviour
     public Transform spawnPos;
     public ObjectPool<GameObject> pool;
     public GameObject block;
-    public float rad=3f;
+    
 
-    public float timeSec;
+    private float timeSec;
     private float timeMilli;
+
+    [SerializeField] float spawnTime=8;
+    [SerializeField] float minSpawnTime=15;
+    [SerializeField] float maxSpawnTime=25;
+
+
 
     // Start is called before the first frame update
     void Awake()
@@ -66,7 +73,7 @@ public class WallSpawner : MonoBehaviour
 
     private void Start()
     {
-        rad = 5 - (Difficulty.difficulty/2);
+        
         Spawn();
         //InvokeRepeating(nameof(Spawn), rad, rad);
     }
@@ -78,10 +85,11 @@ public class WallSpawner : MonoBehaviour
         {
             timeMilli = 0;
             timeSec += 1;
-            if (timeSec > rad)
+            if (timeSec > spawnTime)
             {
                 Spawn();
                 timeSec = 0;
+                spawnTime= UnityEngine.Random.Range(minSpawnTime,maxSpawnTime);
             }
         }
         
