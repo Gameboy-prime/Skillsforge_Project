@@ -5,7 +5,9 @@ using UnityEngine.Pool;
 
 public class weaponManager : MonoBehaviour
 {
-    
+ 
+
+
 
     [Header("Bullet Parameter")]
     [SerializeField] float reloadTime, timeBetweenShooting,timeBetweenShots,range, spread;
@@ -32,6 +34,8 @@ public class weaponManager : MonoBehaviour
 
     private float elapsedTime;
     public WeaponHandler weaponHandler;
+
+
 
     
 
@@ -79,11 +83,12 @@ public class weaponManager : MonoBehaviour
 
                 //Instantiate the bullet game object
 
-                GameObject bulletObject = weaponHandler.bulletPool.Get();
+                GameObject bulletObject = weaponHandler.ChooseBullet().Get(); ;
+                
                 bulletObject.transform.position = attackPoint.position;
                 bulletObject.transform.forward = directionWithSpread.normalized;
                 bulletObject.transform.rotation = Quaternion.Euler(-90, 0, 0);
-                bulletObject.GetComponent<Bullet>().damage = damage;
+                
                 
 
                 //Add the forces to the bullet
