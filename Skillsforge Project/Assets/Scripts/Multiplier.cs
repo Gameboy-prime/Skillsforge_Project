@@ -7,7 +7,7 @@ public class Multiplier : MonoBehaviour
 {
     public TextMeshPro textBox;
     public string multiplierState;
-    private string[] operators= { "÷", "-","+", "*" };
+    private string[] operators= { "÷", "-","+" };
 
     // Start is called before the first frame update
     void Start()
@@ -21,9 +21,9 @@ public class Multiplier : MonoBehaviour
     public void CallDeterminatState()
     {
        // Debug.Log("CallDetermineState Function was called");
-        string op = operators[Random.Range(0, 4)];
+        string op = operators[Random.Range(0, 3)];
 
-        if(CloneMultiplier.playerNum>40 && op == "*")
+        if(CloneMultiplier.playerNum>3 && op == "*")
         {
             op = "+";
         }
