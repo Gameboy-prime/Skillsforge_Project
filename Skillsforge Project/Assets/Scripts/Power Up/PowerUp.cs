@@ -6,7 +6,7 @@ public class PowerUp : MonoBehaviour
 {
     public GameObject[] gunObjects;
     public enum PowerUpType { 
-        Gun1, Gun2, Gun3
+        Gun1, Gun2, Gun3,Gun4
     }
 
     public PowerUpType type;
@@ -27,6 +27,10 @@ public class PowerUp : MonoBehaviour
         else if (rad == 2)
         {
             type = PowerUpType.Gun3;
+        }
+        else if(rad == 3)
+        {
+            type = PowerUpType.Gun4;
         }
 
         ChooseGun(rad);
