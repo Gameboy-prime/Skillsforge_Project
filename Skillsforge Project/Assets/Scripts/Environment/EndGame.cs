@@ -6,7 +6,7 @@ using UnityEngine.AI;
 public class EndGame : MonoBehaviour
 {
 
-    public static bool isFighting;
+    public static bool endGame;
 
     //Reference
     //public EnemySpawner enemySpawner;
@@ -14,44 +14,54 @@ public class EndGame : MonoBehaviour
     public GameObject player;
     public EnemySpawner enemySpawner;
     public WallSpawner wallSpawner;
-    public Animator camAnime;
+    public PowerupSpawner powerUpSpawner;
+    public Statistics stats;
+    public GameEnd gameEnd;
+   
 
     //FX
     public AudioSource source;
-    public AudioClip ChargeClip;
-    public AudioSource fightClip;
+    
     public float endTime=20f;
 
-    public GameObject king;
-    // Start is called before the first frame update
-    void Start()
+    private void Start()
     {
-        endTime = Difficulty.difficulty * 30;
-        Invoke(nameof(EndPhase), endTime);
-        
-    }
+        GameData.currentGameCoin= 0;
+        endGame = false;
 
+    }
 
     private void Update()
     {
-        
+        //Debug.Log($"The Number of Zombie is {EnemySpawner.EnemyDeadCount} And the Number of possible enemy is {enemySpawner.numPossibleEnemy}");
+        if(EnemySpawner.EnemyDeadCount >= enemySpawner.numPossibleEnemy && !endGame)
+        {
+            endGame = true;
+            Debug.Log("it can actually end phase");
+            EndPhase();
+        }
     }
+
+
 
 
 
 
     public void EndPhase()
     {
-        if (!CloneMultiplier.isDead)
+        Debug.Log("The Ende Phase function is called");
+        StartCoroutine(PhaseEnd());
+        /*if (!CloneMultiplier.isDead)
         {
             StartCoroutine(PhaseEnd());
-        }
-        
+        }*/
+
 
     }
 
     IEnumerator PhaseEnd()
     {
+        Debug.Log("THe Phase is Ending");
         Multiplier[] multiplier = FindObjectsOfType<Multiplier>();
 
         for(int i = 0; i < multiplier.Length; i++)
@@ -59,57 +69,35 @@ public class EndGame : MonoBehaviour
             multiplier[i].GetComponent<BoxCollider>().enabled= false;
         }
         wallSpawner.GetComponent<WallSpawner>().enabled = false;
+        enemySpawner.GetComponent<EnemySpawner>().enabled= false;
+        powerUpSpawner.GetComponent<PowerupSpawner>().enabled = false;
 
         player.GetComponent<CapsuleCollider>().enabled = false ;
         player.GetComponent<Movement>().enabled = false;
-        player.GetComponent<PlayerFight>().enabled = true;
+        
        // player.GetComponent<PlayerFight>().Attack();
         yield return new WaitForSeconds(1);
-        source.PlayOneShot(ChargeClip);
-        enemySpawner.EnemySpawn();
-        camAnime.Play("CamFightAnim");
-        isFighting= true;
-        yield return new WaitForSeconds(1.5f);
-        king.AddComponent<CapsuleCollider>();
-        king.GetComponent<CapsuleCollider>().isTrigger = true;
-
-
-
-    }
-
-    public void FightOver()
-    {
-        /*if(isFighting && (enemySpawner.enemyCount<=0  && CloneMultiplier.playerNum>0))
-        {
-            Debug.Log("The fight Over Function has been called");
-            player.GetComponent<PlayerFight>().enabled=false;
-            player.GetComponentInChildren<Animator>().Play("Running");
-            player.GetComponent<NavMeshAgent>().SetDestination(endPoint.position);
-            if (player.GetComponent<CapsuleCollider>().enabled != true)
-            {
-                player.GetComponent<CapsuleCollider>().enabled = true;
-
-            }
-            fightClip.Stop();
-
-        }*/
 
         
-    }
-
-    public void CheckPlayer()
-    {
-        /*Debug.Log("The check player function has been called");
-        if (isFighting && (enemySpawner.enemyCount > 0 && CloneMultiplier.playerNum == 1))
+        stats.ShowStats();
+        
+        
+        yield return new WaitForSeconds(1.5f);
+        if (endGame)
         {
+            gameEnd.SaveProgress();
+        }
+        
 
-            Debug.Log("The Player is dead");
-            player.GetComponent<CloneMultiplier>().Dying();
-            player.GetComponentInChildren<Animator>().SetTrigger("die");
 
-        }*/
+        
+
+
 
     }
 
+   
+
+    
     
 }
