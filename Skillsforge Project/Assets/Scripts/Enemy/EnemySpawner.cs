@@ -7,6 +7,8 @@ using UnityEngine.SceneManagement;
 
 public class EnemySpawner : MonoBehaviour
 {
+     public int  numPossibleEnemy;
+    public int numEnemy;
     public ObjectPool<GameObject> enemyPool_l;
     public ObjectPool<GameObject> enemyPool_2;
     public ObjectPool<GameObject> enemyPool_3;
@@ -30,6 +32,12 @@ public class EnemySpawner : MonoBehaviour
         {
             enemyCount = (int)Difficulty.difficulty * 10;
         }*/
+
+        numPossibleEnemy = (int) Difficulty.difficulty * 40;
+        
+
+        numEnemy = numPossibleEnemy;
+
         #region EnemyPool1
 
         enemyPool_l = new ObjectPool<GameObject>(() =>
@@ -130,9 +138,9 @@ public class EnemySpawner : MonoBehaviour
         }, true, 200, 300);
         #endregion
 
+        EnemyDeadCount= 0;
 
-
-        elapsedTime = minSpawnTime;
+        elapsedTime = spawnTime;
         
 
     }
@@ -141,14 +149,19 @@ public class EnemySpawner : MonoBehaviour
     void Update()
     {
         elapsedTime-= Time.deltaTime;
-
-        if (elapsedTime < 0)
+        if (numEnemy > 0)
         {
-            StartCoroutine(SpawnEnemy());
-            spawnTime=  Random.Range(minSpawnTime, maxSpawnTime);
-            elapsedTime = spawnTime;
+            if (elapsedTime < 0)
+            {
+                StartCoroutine(SpawnEnemy());
+                spawnTime = Random.Range(minSpawnTime, maxSpawnTime);
+                elapsedTime = spawnTime;
+            }
         }
     }
+
+       
+    
 
     public void EnemySpawn()
     {
@@ -158,6 +171,15 @@ public class EnemySpawner : MonoBehaviour
     IEnumerator SpawnEnemy()
     {
         int enemyCount = Random.Range(minEnemyCount, maxEnemyCount);
+        int remainEnemy= numEnemy - enemyCount;
+        if(remainEnemy <= 0)
+        {
+            enemyCount = numEnemy;
+            numEnemy = 0;
+        }
+
+
+
         for (int i = 0; i < enemyCount; i++)
         {
             float rad = Random.Range(-6f, 6f);
@@ -239,6 +261,7 @@ public class EnemySpawner : MonoBehaviour
 
             }
         }
+        numEnemy -= enemyCount;
 
     }
 }
