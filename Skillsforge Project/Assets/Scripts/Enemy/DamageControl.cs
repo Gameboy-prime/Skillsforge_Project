@@ -11,15 +11,31 @@ public class DamageControl : MonoBehaviour
 
     public EnemyType enemyType;
 
-    [SerializeField] float health;
+    [SerializeField] int health;
     [SerializeField] Animator anime;
-    private float currentHealth;
+    private int currentHealth;
     public float deathTime = 2.3f;
 
     [SerializeField] string deathAnimeString;
+    [SerializeField] string fightAnimeString;
+
+    private EnemySpawner spawner;
+    private CapsuleCollider collider;
+    private NavMeshAgent agent;
+    private EnemyMove move;
+    private Effects effects;
+
+    
+
+    public int damageLevel = 10;
    
     private void Start()
     {
+        spawner = FindObjectOfType<EnemySpawner>();
+        collider= GetComponent<CapsuleCollider>();
+        agent= GetComponent<NavMeshAgent>();
+        effects= FindObjectOfType<Effects>();
+        move= GetComponent<EnemyMove>();
         currentHealth = health;
     }
     public void TakeDamage(int damage)
@@ -44,9 +60,9 @@ public class DamageControl : MonoBehaviour
 
     IEnumerator Dying()
     {
-        GetComponent<CapsuleCollider>().enabled = false;
-        GetComponent<NavMeshAgent>().enabled = false;
-        GetComponent<EnemyMove>().enabled = false;
+        collider.enabled = false;
+        agent.enabled = false;
+        move.enabled = false;
         anime.Play(deathAnimeString);
        
 
@@ -58,19 +74,19 @@ public class DamageControl : MonoBehaviour
         //Will release the ennemy object based on the type of the enemy
         if(enemyType== EnemyType.A)
         {
-            FindObjectOfType<EnemySpawner>().enemyPool_l.Release(this.gameObject);
+            spawner.enemyPool_l.Release(this.gameObject);
         }
         else if(enemyType== EnemyType.B)
         {
-            FindObjectOfType<EnemySpawner>().enemyPool_2.Release(this.gameObject);
+            spawner.enemyPool_2.Release(this.gameObject);
         }
         else if(enemyType== EnemyType.C)
         {
-            FindObjectOfType<EnemySpawner>().enemyPool_3.Release(this.gameObject);
+            spawner.enemyPool_3.Release(this.gameObject);
         }
         else if(enemyType== EnemyType.D)
         {
-            FindObjectOfType<EnemySpawner>().enemyPool_4.Release(this.gameObject);
+            spawner.enemyPool_4.Release(this.gameObject);
         }
         
     }
@@ -82,9 +98,20 @@ public class DamageControl : MonoBehaviour
         effect.transform.position = transform.position;
         effect.transform.rotation = transform.rotation;
         yield return new WaitForSeconds(.3f);
-        FindObjectOfType<Effects>().bloodPool.Release(effect);
+        effects.bloodPool.Release(effect);
+
+        
 
 
     }
-    
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            anime.Play(fightAnimeString);
+        }
+        
+    }
+
 }
