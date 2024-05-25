@@ -18,12 +18,13 @@ public class FightDetect : MonoBehaviour
     {
         if (other.CompareTag("enemy") && !CloneMultiplier.isDead)
         {
-            FindObjectOfType<EndGame>().CheckPlayer();
             Debug.Log("Has collided with the enemy");
-            multiplierReference.fightClip.Play();
+            
 
             multiplierReference.anime.Play("Stable Sword Outward Slash");
         }
 
     }
+
+    
 }
