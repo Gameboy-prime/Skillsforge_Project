@@ -17,6 +17,7 @@ public class Movement : MonoBehaviour
     private bool canSwipe;
 
     private bool isMoving;
+    [SerializeField] Animator anime;
 
 
     // Update is called once per frame
@@ -35,13 +36,13 @@ public class Movement : MonoBehaviour
     //This is if the controls are from a keyboard
     private void KeyBoardControls()
     {
-        if (this.transform.position.x < Boundary.rightMove && Input.GetKeyDown(KeyCode.RightArrow))
+        if (this.transform.position.x < Boundary.rightMove && Input.GetKeyDown(KeyCode.RightArrow) && !EndGame.endGame)
         {
             transform.Translate(new Vector3(1.5f, 0, 0));
 
 
         }
-        if (this.transform.position.x > Boundary.leftMove && Input.GetKeyDown(KeyCode.LeftArrow))
+        if (this.transform.position.x > Boundary.leftMove && Input.GetKeyDown(KeyCode.LeftArrow) && !EndGame.endGame)
         {
             transform.Translate(new Vector3(-1.5f, 0, 0));
 
@@ -138,9 +139,11 @@ public class Movement : MonoBehaviour
 
     public void MoveLeft()
     {
-        if (this.transform.position.x > Boundary.leftMove && !isMoving && !CloneMultiplier.isDead)
+        if (this.transform.position.x > Boundary.leftMove && !isMoving && !CloneMultiplier.isDead && !EndGame.endGame)
         {
-            sound.PlayClickSound();
+            //sound.PlayClickSound();
+            //anime.SetTrigger("Move");
+            anime.Play("Strafe");
             StartCoroutine(MoveToTarget(this.transform.position + new Vector3(-1.5f, 0, 0)));
 
 
@@ -151,9 +154,11 @@ public class Movement : MonoBehaviour
 
     public void MoveRight()
     {
-        if (this.transform.position.x < Boundary.rightMove && !isMoving && !CloneMultiplier.isDead )
+        if (this.transform.position.x < Boundary.rightMove && !isMoving && !CloneMultiplier.isDead && !EndGame.endGame )
         {
-            sound.PlayClickSound();
+            //sound.PlayClickSound();
+            //anime.SetTrigger("Move");
+            anime.Play("Strafe");
             StartCoroutine(MoveToTarget(this.transform.position + new Vector3(1.5f, 0, 0)));
 
 
