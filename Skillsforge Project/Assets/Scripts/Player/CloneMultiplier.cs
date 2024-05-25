@@ -33,7 +33,7 @@ public class CloneMultiplier : MonoBehaviour
     public AudioClip portalEnter;
     public AudioClip spawnPlayer;
 
-    public GameObject gameOverBox;
+    public GameOver gameOver;
     public GameObject king;
 
     public List<GameObject> spawnList;
@@ -158,8 +158,7 @@ public class CloneMultiplier : MonoBehaviour
         anime.Play("Dying");
         wallSpawner.GetComponent<WallSpawner>().enabled = false;
         enemySpawner.GetComponent<EnemySpawner>().enabled = false;
-
-        gameOverBox.SetActive(true);
+        gameOver.ShowGameOver();
 
 
 
