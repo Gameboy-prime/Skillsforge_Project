@@ -27,6 +27,20 @@ public class Multiplier : MonoBehaviour
         {
             op = "+";
         }
+
+        if (CloneMultiplier.playerNum > 5)
+        {
+            int rad = Random.Range(0, 2);
+            if (rad == 0)
+            {
+                op= "÷";
+            }
+            else if (rad == 1)
+            {
+                op = "-";
+            }
+            
+        }
         string value = Random.Range(1, 3).ToString();
         multiplierState = op + " " + value;
         textBox.text = multiplierState;
