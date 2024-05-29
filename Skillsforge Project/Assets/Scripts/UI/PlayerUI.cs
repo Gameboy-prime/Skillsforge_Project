@@ -14,7 +14,7 @@ public class PlayerUI : MonoBehaviour
     void Update()
     {
         currentGameCoin.text = GameData.currentGameCoin.ToString();
-        zombieNum.text= EnemySpawner.EnemyDeadCount.ToString();
+        zombieNum.text= EnemySpawner.EnemyDeadCount.ToString() + "/" + EnemySpawner.numPossibleEnemy.ToString();
         
     }
 }
