@@ -114,4 +114,13 @@ public class DamageControl : MonoBehaviour
         
     }
 
+    private IEnumerator OnTriggerStay(Collider other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            yield return new WaitForSeconds(1);
+            anime.Play(fightAnimeString);
+        }
+    }
+
 }
