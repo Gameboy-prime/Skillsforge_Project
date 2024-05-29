@@ -16,6 +16,7 @@ public class EndGame : MonoBehaviour
     public WallSpawner wallSpawner;
     public PowerupSpawner powerUpSpawner;
     public Statistics stats;
+    public GameOver gameOver;
     public GameEnd gameEnd;
    
 
@@ -34,7 +35,7 @@ public class EndGame : MonoBehaviour
     private void Update()
     {
         //Debug.Log($"The Number of Zombie is {EnemySpawner.EnemyDeadCount} And the Number of possible enemy is {enemySpawner.numPossibleEnemy}");
-        if(EnemySpawner.EnemyDeadCount >= enemySpawner.numPossibleEnemy && !endGame)
+        if(EnemySpawner.EnemyDeadCount >= EnemySpawner.numPossibleEnemy && !endGame)
         {
             endGame = true;
             Debug.Log("it can actually end phase");
@@ -79,13 +80,18 @@ public class EndGame : MonoBehaviour
         yield return new WaitForSeconds(1);
 
         
-        stats.ShowStats();
+        
         
         
         yield return new WaitForSeconds(1.5f);
         if (endGame)
         {
+            stats.ShowStats();
             gameEnd.SaveProgress();
+        }
+        else
+        {
+            gameOver.ShowGameOver();
         }
         
 
