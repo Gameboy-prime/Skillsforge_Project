@@ -56,10 +56,12 @@ public class CloneMultiplier : MonoBehaviour
         obj =>
         {
             obj.gameObject.SetActive(true);
+            obj.GetComponent<CloneMove>().enabled = true;
         },
         obj =>
         {
             obj.gameObject.SetActive(false);
+            
         },
         obj =>
         {
@@ -86,7 +88,7 @@ public class CloneMultiplier : MonoBehaviour
         if (other.CompareTag("Instruction Block"))
         {
             source.PlayOneShot(portalEnter);
-            Debug.Log("has entered the instruction block");
+            //Debug.Log("has entered the instruction block");
             string determinant = other.GetComponent<Multiplier>().multiplierState;
             string[] instructionArray = determinant.Split(" ");
 
@@ -148,16 +150,18 @@ public class CloneMultiplier : MonoBehaviour
 
         
 
-        Debug.Log("THe dying function has been called");
+        //Debug.Log("THe dying function has been called");
         king.GetComponent<FightDetect>().enabled= false;
         player.GetComponent<CapsuleCollider>().enabled= false;
         player.GetComponentInChildren<CapsuleCollider>().enabled= false;
+        player.GetComponentInChildren<weaponManager>().enabled= false;
         player.GetComponent<PlayerFight>().enabled = false;
         player.GetComponent<Movement>().enabled = false;
         //player.GetComponent<CloneMultiplier>().enabled = false;
         anime.Play("Dying");
         wallSpawner.GetComponent<WallSpawner>().enabled = false;
         enemySpawner.GetComponent<EnemySpawner>().enabled = false;
+
         gameOver.ShowGameOver();
 
 
@@ -174,6 +178,15 @@ public class CloneMultiplier : MonoBehaviour
             groundMove[i].GetComponent<GroundMove>().enabled = false;
         }
     }
+
+    /*public void FindEnemyToRelease()
+    {
+        DamageControl[] damagecontrolEnemy= FindObjectsOfType<DamageControl>();
+        for(int i=0; i< damagecontrolEnemy.Length; i++)
+        {
+
+        }
+    }*/
 
     IEnumerator SpawnPlayer(int num)
     {
