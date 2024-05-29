@@ -23,7 +23,7 @@ public class TutorialMovement : MonoBehaviour
 
     public void MoveRight()
     {
-        if (this.transform.position.x < Boundary.rightMove && !isMoving && !TutorialCloneMultiplier.isDead && !EndGame.isFighting)
+        if (this.transform.position.x < Boundary.rightMove && !isMoving && !TutorialCloneMultiplier.isDead )
         {
             sound.PlayClickSound();
             StartCoroutine(MoveToTarget(this.transform.position + new Vector3(6, 0, 0)));
