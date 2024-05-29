@@ -34,20 +34,20 @@ public class BoulderDamageControl : MonoBehaviour
         {
             if (powerUp.type == PowerUp.PowerUpType.Gun1)
             {
-                WeaponHandler.gunNo = 1;
+                WeaponHandler.gunNo = 0;
             }
             else if (powerUp.type == PowerUp.PowerUpType.Gun2)
             {
-                WeaponHandler.gunNo = 2;
+                WeaponHandler.gunNo = 1;
             }
             else if(powerUp.type == PowerUp.PowerUpType.Gun3)
             {
-                WeaponHandler.gunNo = 3;
+                WeaponHandler.gunNo = 2;
             }
 
             else if(powerUp.type == PowerUp.PowerUpType.Gun4)
             {
-                WeaponHandler.gunNo = 4;
+                WeaponHandler.gunNo = 3;
             }
 
             Destroy();
