@@ -26,9 +26,9 @@ public class PlayerDamageControl : MonoBehaviour
     [SerializeField] float damageTime=2;
 
     public EndGame endGame;
-    
 
-    
+
+    private bool canDamage=true;
     
     IEnumerator ReleaseEffect()
     {
@@ -44,56 +44,33 @@ public class PlayerDamageControl : MonoBehaviour
 
     }
 
-    private void OnTriggerEnter(Collider other)
-    {
-        if (other.CompareTag(enemytag))
-        {
-            isColliding = true;
-            Enemy= other;
-        }
-        
-        
-    }
+   
 
-    private void OnTriggerStay(Collider other)
+    void OnTriggerStay(Collider other)
     {
-        if (other.CompareTag(enemytag))
-        {
-            isColliding = true;
-            Enemy = other;
-        }
-    }
 
-    private void OnTriggerExit(Collider other)
-    {
-        if (other.CompareTag(enemytag))
+        if (!CloneMultiplier.isDead && other.CompareTag(enemytag) && canDamage)
         {
-            isColliding = false;
             
-        }
-    }
-    private void Update()
-    {
-
-        Debug.Log($"The current DHealt is {currentHealth}");
-        
-        sec -= Time.deltaTime;
-        if(sec < 0)
-        {
-            Checking();
-            sec = damageTime;
-        }
-    }
-
-    void Checking()
-    {
-        if (isColliding && !CloneMultiplier.isDead)
-        {
-            DamageControl control = Enemy.GetComponent<DamageControl>();
+            DamageControl control = other.GetComponent<DamageControl>();
 
             TakeDamage(control.damageLevel);
+            canDamage= false;
+            Invoke(nameof(CanTakeDamage), 1);
+            
+
         }
+
     }
+    void CanTakeDamage()
+    {
+        canDamage = true;
+    }
+
+
+
+    
+
 
     private void Start()
     {
@@ -105,7 +82,7 @@ public class PlayerDamageControl : MonoBehaviour
         sec = damageTime;
     }
 
-    void TakeDamage(int damage)
+    public void TakeDamage(int damage)
     {
         currentHealth -= damage;
 
