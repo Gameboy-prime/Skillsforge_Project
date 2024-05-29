@@ -53,12 +53,14 @@ public class Statistics : MonoBehaviour
         menuBox.SetActive(true);
 
 
-        int coin = PlayerPrefs.GetInt("Coin");
+        int coin = PlayerPrefs.GetInt("Coins");
         int currentCoin = totalValue;
         coin += currentCoin;
         PlayerPrefs.SetInt("Coins", coin);
         PlayerPrefs.Save();
+        yield return new WaitForSeconds(1);
 
+        Time.timeScale = 0;
 
        
     }
