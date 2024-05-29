@@ -45,7 +45,7 @@ public class PowerUp : MonoBehaviour
 
         gunObjects[gunNo].gameObject.SetActive(true);
 
-        Debug.Log("The power up is " + gunNo);
+        //Debug.Log("The power up is " + gunNo);
     }
 
     
