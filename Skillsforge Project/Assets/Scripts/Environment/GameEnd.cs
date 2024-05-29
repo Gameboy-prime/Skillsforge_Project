@@ -16,7 +16,7 @@ public class GameEnd : MonoBehaviour
     {
        
         float num = Difficulty.difficulty;
-        float check = PlayerPrefs.GetFloat("difficulty");
+        float check = PlayerPrefs.GetFloat("difficulty",0);
 
         if (num >= check)
         {
