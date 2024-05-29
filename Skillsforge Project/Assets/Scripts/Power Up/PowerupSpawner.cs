@@ -1,9 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Pool;
-using static UnityEditor.PlayerSettings;
+
 
 public class PowerupSpawner : MonoBehaviour
 {
@@ -16,9 +15,9 @@ public class PowerupSpawner : MonoBehaviour
     private float spawnTime=3;
     private Vector3 pos;
 
-    public float timeSec;
-    private float timeMilli;
+    private float elapsedTime;
 
+    private int counter;
 
     private void Awake()
     {
@@ -48,33 +47,34 @@ public class PowerupSpawner : MonoBehaviour
 
     private void Start()
     {
-        Spawn();
-        pos= spawnPos.position;
+        counter = 0;
+        pos = spawnPos.position;
+        elapsedTime = spawnTime;
+        
+        
     }
 
     private void Update()
     {
-        timeMilli += Time.deltaTime * 10;
-        if (timeMilli > 10)
+        elapsedTime-=Time.deltaTime;
+        if (elapsedTime < 0)
         {
-            timeMilli = 0;
-            timeSec += 1;
-            if (timeSec > spawnTime)
-            {
-                Spawn();
-                timeSec = 0;
-
-                spawnTime = Random.Range(minSpawnTime,maxSpawnTime);
-            }
+            Spawn();
+            spawnTime=Random.Range(minSpawnTime, maxSpawnTime);
+            elapsedTime = spawnTime;
         }
+        
+
+        //Debug.Log($"THe Quality Level is {QualitySettings.GetQualityLevel()}");
 
     }
 
 
-    public void Spawn()
+    private void Spawn()
     {
+        counter += 1;
 
-        GameObject spawnee = pool.Get();
+        
         /*spawnee.transform.position = spawnPos.position;
         spawnee.transform.rotation = Quaternion.identity;*/
         //SpawnTime();
@@ -89,6 +89,8 @@ public class PowerupSpawner : MonoBehaviour
         {
             pos.x = spawnPos.position.x + 6;
         }
+
+        GameObject spawnee = pool.Get();
 
         spawnee.transform.position = pos;
         spawnee.transform.rotation = Quaternion.identity;
@@ -105,9 +107,20 @@ public class PowerupSpawner : MonoBehaviour
             pos.x = spawnPos.position.x - 6;
         }
 
-
+        Debug.Log($"The counter is {counter}");
         //spawnPos.position += new Vector3(0, 0, 50);
 
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Boulder"))
+        {
+            pool.Release(other.gameObject);
+        }
+        {
+
+        }
     }
 }
 
