@@ -7,7 +7,7 @@ using UnityEngine.SceneManagement;
 
 public class EnemySpawner : MonoBehaviour
 {
-     public int  numPossibleEnemy;
+     public static int  numPossibleEnemy;
     public int numEnemy;
     public ObjectPool<GameObject> enemyPool_l;
     public ObjectPool<GameObject> enemyPool_2;
