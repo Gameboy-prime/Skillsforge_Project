@@ -47,19 +47,21 @@ public class MenuManager : MonoBehaviour
 
     public void Restart()
     {
-        Time.timeScale = 1;
+        
         
         sound.PlayClickSound();
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        Time.timeScale = 1;
 
     }
     public  void Menu()
     {
         isPaused = false;
-        Time.timeScale = 1f;
+        
         sound.PlayClickSound();
         SceneManager.LoadScene(1);
-        
+        Time.timeScale = 1f;
+
     }
 
     public void Quit()
