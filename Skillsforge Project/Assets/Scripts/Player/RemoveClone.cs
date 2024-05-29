@@ -4,15 +4,17 @@ using UnityEngine;
 
 public class RemoveClone : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    [SerializeField] int boulderDamage = 50;
 
-    // Update is called once per frame
-    void Update()
+    private void OnTriggerEnter(Collider other)
     {
-        
+        if (other.CompareTag("Player Clone"))
+        {
+            other.GetComponent<CloneDamageControl>().TakeDamage(boulderDamage);
+        }
+        else if (other.CompareTag("Player"))
+        {
+            other.GetComponent<PlayerDamageControl>().TakeDamage(boulderDamage);
+        }
     }
 }
