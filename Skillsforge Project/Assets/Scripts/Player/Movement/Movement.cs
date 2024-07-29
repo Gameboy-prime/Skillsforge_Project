@@ -2,9 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Movement : MonoBehaviour
 {
+
+    
     private Vector2 initialXPos;
     private Vector2 finalXPos;
     private Vector3 swipeVector;
@@ -19,6 +22,10 @@ public class Movement : MonoBehaviour
     private bool isMoving;
     [SerializeField] Animator anime;
 
+    [SerializeField] float speed=10f;
+
+    private float previousSlideValue=0;
+
 
     // Update is called once per frame
     void Update()
@@ -27,32 +34,42 @@ public class Movement : MonoBehaviour
         
 
 
-        KeyBoardControls();
+        //KeyBoardControls();
 
 
     }
 
 
+    #region Keyboard
     //This is if the controls are from a keyboard
     private void KeyBoardControls()
     {
         if (this.transform.position.x < Boundary.rightMove && Input.GetKeyDown(KeyCode.RightArrow) && !EndGame.endGame)
         {
-            transform.Translate(new Vector3(1.5f, 0, 0));
+            //transform.Translate(new Vector3(1.5f, 0, 0));
+            anime.Play("Strafe");
+            StartCoroutine(MoveToTarget(this.transform.position + new Vector3(1.5f, 0, 0)));
+
+
 
 
         }
         if (this.transform.position.x > Boundary.leftMove && Input.GetKeyDown(KeyCode.LeftArrow) && !EndGame.endGame)
         {
-            transform.Translate(new Vector3(-1.5f, 0, 0));
+            //transform.Translate(new Vector3(-1.5f, 0, 0));
+            anime.Play("Strafe");
+            StartCoroutine(MoveToTarget(this.transform.position + new Vector3(-1.5f, 0, 0)));
+
 
         }
 
     }
+    #endregion
+
 
     #region Swipe COntrols
 
-    
+
 
     private void SwipeControls()
     {
@@ -169,7 +186,24 @@ public class Movement : MonoBehaviour
     #endregion
 
 
+    #region Slider Control
 
+    public void Slide(float value)
+    {
+        if (!EndGame.endGame)
+        {
+
+            anime.Play("Strafe");
+            Vector3 target = new Vector3(value, 0, 0);
+            StartCoroutine(MoveToTargetSlider(target,value));
+        }
+        
+
+    }
+    #endregion
+
+
+    #region MoveToTarget
     IEnumerator MoveToTarget(Vector3 targetPosition)
     {
         isMoving = true;
@@ -177,13 +211,59 @@ public class Movement : MonoBehaviour
         Vector3 startPosition = transform.position;
         Vector3 target = targetPosition;
 
-        while (elapsedTime < 1f)
+        while (elapsedTime < 2f)
         {
             transform.position = Vector3.Lerp(startPosition, target, elapsedTime);
-            elapsedTime += Time.deltaTime * 5;
+            elapsedTime += Time.deltaTime * 2;
             yield return null;
         }
         transform.position = target;
-        isMoving= false;
+        isMoving = false;
     }
+
+    #endregion
+
+
+    IEnumerator MoveToTargetSlider(Vector3 targetPosition, float value)
+    {
+        isMoving = true;
+        
+        Vector3 target = targetPosition;
+
+        if(value> previousSlideValue)
+        {
+            //Move to the right
+            while (transform.position.x < target.x)
+            {
+                Vector3 newPos = transform.position + new Vector3(.5f, 0, 0);
+                transform.position = newPos;
+
+                
+                yield return null;
+            }
+            
+            
+        }
+        else
+        {
+            //Move to the left
+            while (transform.position.x > target.x)
+            {
+                Vector3 newPos = transform.position + new Vector3(-.5f, 0, 0);
+                transform.position = newPos;
+
+
+                yield return null;
+            }
+        }
+
+        previousSlideValue=value;
+
+       
+        transform.position = target;
+        isMoving = false;
+    }
+
+
+
 }
