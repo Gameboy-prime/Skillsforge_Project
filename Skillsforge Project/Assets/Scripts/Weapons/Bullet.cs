@@ -2,14 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum BulletType
+{
+    TypeA, TypeB, TypeC, TypeD
+}
 public class Bullet : MonoBehaviour
 {
 
     public int damage;
-    public enum BulletType
-    {
-        TypeA, TypeB, TypeC, TypeD
-    }
+    
     public BulletType bulletType;
     
     private void OnTriggerEnter(Collider other)
