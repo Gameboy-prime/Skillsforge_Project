@@ -12,15 +12,11 @@ public static class GameData
 
     static GameData()
     {
-        coins = PlayerPrefs.GetInt("Coins", 0);
+        coins = DataSaverDatabase.coinsStatic;
 
     }
 
-    public static int Coins
-    {
-        get { return coins; }
-        set { PlayerPrefs.SetInt("Coins", coins); }
-    }
+  
 
     public static void IncrementCoin()
     {
