@@ -14,14 +14,16 @@ public class BoulderDamageControl : MonoBehaviour
     [SerializeField] ParticleSystem effect;
 
     private PowerUp powerUp;
+    private CarActivator car;
 
 
-   
+
     private void Start()
     {
         
         currentHealth = health;
-        powerUp= GetComponent<PowerUp>();
+        
+        
         
     }
     public void TakeDamage(int damage)
@@ -32,6 +34,8 @@ public class BoulderDamageControl : MonoBehaviour
 
         if (currentHealth <= 0)
         {
+            powerUp = GetComponent<PowerUp>();
+
             if (powerUp.type == PowerUp.PowerUpType.Gun1)
             {
                 WeaponHandler.gunNo = 0;
@@ -40,14 +44,19 @@ public class BoulderDamageControl : MonoBehaviour
             {
                 WeaponHandler.gunNo = 1;
             }
-            else if(powerUp.type == PowerUp.PowerUpType.Gun3)
+            else if (powerUp.type == PowerUp.PowerUpType.Gun3)
             {
                 WeaponHandler.gunNo = 2;
             }
 
-            else if(powerUp.type == PowerUp.PowerUpType.Gun4)
+            else if (powerUp.type == PowerUp.PowerUpType.Gun4)
             {
                 WeaponHandler.gunNo = 3;
+            }
+            if (powerUp.canActivateTank)
+            {
+                car = FindObjectOfType<CarActivator>();
+                car.ActivateCar();
             }
 
             Destroy();
@@ -62,6 +71,7 @@ public class BoulderDamageControl : MonoBehaviour
 
     private void Destroy()
     {
+        
         GetComponent<SphereCollider>().enabled = false;
        
         StartCoroutine(ReleaseEffect());
