@@ -1,13 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using static Bullet;
+
 
 public class ReleaseBullet : MonoBehaviour
 {
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Bullet"))
+        /*if (other.CompareTag("Bullet"))
         {
             Debug.Log("THe buullet object has entered the trigger");
             Bullet bullet= other.GetComponent<Bullet>();
@@ -28,6 +28,6 @@ public class ReleaseBullet : MonoBehaviour
             {
                 WeaponHandler.Instance.GetBulletPool(3).Release(other.gameObject);
             }
-        }
+        }*/
     }
 }
