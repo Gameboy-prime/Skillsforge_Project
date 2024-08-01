@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Pool;
-using static Bullet;
+ 
 
 public class weaponManager : MonoBehaviour
 {
@@ -22,13 +22,13 @@ public class weaponManager : MonoBehaviour
     [SerializeField] LayerMask shootables;
 
     private RaycastHit hit;
-    private bool isReloading, shooting;
+    private bool isReloading;
     private float elapsedTime;
     
 
     void Start()
     {
-        shooting = true;
+        
         elapsedTime = timeBetweenShooting;
         WeaponHandler.gunNo = 0; // Set this to the appropriate gun number for this weapon
     }
@@ -69,15 +69,17 @@ public class weaponManager : MonoBehaviour
 
         GameObject bulletObject = WeaponHandler.Instance.GetBulletPool(WeaponHandler.gunNo).Get();
 
+
+        
         bulletObject.transform.position = attackPoint.position;
         bulletObject.transform.forward = directionWithSpread.normalized;
         bulletObject.transform.rotation = Quaternion.Euler(-90, 0, 0);
 
-        Rigidbody bulletRigidbody = bulletObject.GetComponent<Rigidbody>();
+        /*Rigidbody bulletRigidbody = bulletObject.GetComponent<Rigidbody>();
         bulletRigidbody.AddForce(directionWithSpread.normalized * shootForce, ForceMode.Impulse);
-        bulletRigidbody.AddForce(Vector3.up * upwardForce, ForceMode.Impulse);
-
-        ReturnBullet(5f, bulletObject);
+        bulletRigidbody.AddForce(Vector3.up * upwardForce, ForceMode.Impulse);*/
+        
+        //ReturnBullet(5f, bulletObject);
 
         bulletLeft--;
 
@@ -85,7 +87,7 @@ public class weaponManager : MonoBehaviour
        
     }
 
-    IEnumerator ReturnBullet(float waitTime, GameObject objBullet)
+    /*IEnumerator ReturnBullet(float waitTime, GameObject objBullet)
     {
         yield return new WaitForSeconds(waitTime);
 
@@ -109,12 +111,12 @@ public class weaponManager : MonoBehaviour
             {
                 WeaponHandler.bulletPools[3].Release(objBullet);
             }
-        }
+        }*/
 
        
 
 
-    }
+    //}
 
     
 

@@ -12,7 +12,12 @@ public class Bullet : MonoBehaviour
     public int damage;
     
     public BulletType bulletType;
-    
+
+    private void Update()
+    {
+        transform.Translate(-transform.forward);
+    }
+
     private void OnTriggerEnter(Collider other)
     {//
         //Debug.Log("The Bullet has entered a trigger");

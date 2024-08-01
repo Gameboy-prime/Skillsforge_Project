@@ -8,14 +8,14 @@ public class MenuManager : MonoBehaviour
     [SerializeField] private GameObject pauseBox;
     [SerializeField] private GameObject quitBox;
     public static bool isPaused;
-    public Sounds sound;
+   
 
     // Start is called before the first frame update
    
 
     public void Pause()
     {
-        sound.PlayClickSound();
+        
         StartCoroutine(Pausing());
 
     }
@@ -33,7 +33,7 @@ public class MenuManager : MonoBehaviour
     {
         Time.timeScale = 1f;
         isPaused = false;
-        sound.PlayClickSound();
+       
         StartCoroutine(Resuming());
 
     }
@@ -49,7 +49,7 @@ public class MenuManager : MonoBehaviour
     {
         
         
-        sound.PlayClickSound();
+        
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
         Time.timeScale = 1;
 
@@ -58,7 +58,7 @@ public class MenuManager : MonoBehaviour
     {
         isPaused = false;
         
-        sound.PlayClickSound();
+        
         SceneManager.LoadScene(1);
         Time.timeScale = 1f;
 
@@ -66,30 +66,32 @@ public class MenuManager : MonoBehaviour
 
     public void Quit()
     {
-        sound.PlayClickSound();
+        
         quitBox.SetActive(true);
 
     }
 
-    public void Yes()
+    public void QuitGame()
     {
-        sound.PlayClickSound();
+        
         Application.Quit();
     }
 
     public void No()
     {
-        sound.PlayClickSound();
+        
         quitBox.SetActive(false);
         pauseBox.SetActive(true);
     }
 
     public void TutorialLevel()
     {
-        sound.PlayClickSound();
+        
 
         SceneManager.LoadScene(3);
     }
+
+
 
 
 

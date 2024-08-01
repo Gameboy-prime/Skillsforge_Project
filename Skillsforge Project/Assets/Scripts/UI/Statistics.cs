@@ -25,6 +25,8 @@ public class Statistics : MonoBehaviour
     private int zombieValue;
     private int totalValue;
     private int bonusValue;
+
+    public DataSaverDatabase dataSaverDatabase;
     
 
     IEnumerator Stats()
@@ -53,11 +55,16 @@ public class Statistics : MonoBehaviour
         menuBox.SetActive(true);
 
 
-        int coin = PlayerPrefs.GetInt("Coins");
+        int coin = dataSaverDatabase.playerData.coins;
+        Debug.LogError("The number of previous coin are " + coin);
         int currentCoin = totalValue;
-        coin += currentCoin;
-        PlayerPrefs.SetInt("Coins", coin);
-        PlayerPrefs.Save();
+        coin += currentCoin ;
+        dataSaverDatabase.playerData.coins = coin;
+
+        //Debug.LogError("The number of current  coins are" + coin);
+        //Debug.LogError("The coin on the server is " + dataSaverDatabase.playerData.coins);
+        dataSaverDatabase.SaveData();
+        
         yield return new WaitForSeconds(1);
 
         Time.timeScale = 0;
