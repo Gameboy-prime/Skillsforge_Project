@@ -7,6 +7,7 @@ using UnityEngine.UI;
 public class PlayerDamageControl : MonoBehaviour
 {
     [SerializeField] Animator anime;
+    [SerializeField] GameObject gun;
     [SerializeField] float health;
     [SerializeField] float currentHealth;
     [SerializeField] string enemytag;
@@ -92,6 +93,8 @@ public class PlayerDamageControl : MonoBehaviour
         
         if(currentHealth<= 0)
         {
+            gun.SetActive(false);
+            anime.SetLayerWeight(1, 0);
             anime.Play(dyingAnimeString);
             CloneMultiplier.isDead = true;
             Invoke(nameof(Die), 2);
