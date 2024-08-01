@@ -7,14 +7,55 @@ public class CloneMove : MonoBehaviour
 {
     [SerializeField] private Transform playerPos;
     [SerializeField] private NavMeshAgent agent;
-    // Start is called before the first frame update
+
+    public Animator anime;
+    private bool isMoveAnime=false;
+    private bool isIdleAnime;
+
+    
     
     void Update()
     {
-        agent.SetDestination(playerPos.position + new Vector3(0,0,0));
+        if (Movement.isMoving && !isMoveAnime)
+        {
+            Debug.Log("The Move animation trigger was triggered");
+            anime.SetTrigger("Move");
+            
+
+        }
+        else
+        {
+            Invoke(nameof(WaitForAnimation), .2f);
+        }
+
+        if (Movement.isMoving)
+        {
+            
+            isMoveAnime = true;
+            
+            MoveToPlayer();
+        }
+
+        else
+        {
+            transform.rotation = playerPos.rotation;
+            isMoveAnime =false;
+            
+        }
+
+    }
+
+    private void WaitForAnimation()
+    {
+        anime.SetTrigger("Idle");
+        isMoveAnime = false;
+    }
+
+    private void MoveToPlayer()
+    {
+        transform.rotation = playerPos.rotation;
+        agent.SetDestination(playerPos.position + new Vector3(0, 0, .5f));
         //agent.stoppingDistance = -1;
-        transform.rotation= playerPos.rotation;
-        
-        
+        transform.rotation = playerPos.rotation;
     }
 }
