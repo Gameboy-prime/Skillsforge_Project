@@ -24,20 +24,10 @@ public class SettingsMenu : MonoBehaviour
     public Slider masterSlider;
     public Slider soundSlider;
     public Slider musicSlider;
-    public Slider mouseSensitivitySlider;
-
-
-    
-    
-
-    [Header("Text Mesh")]
-    
-    [SerializeField] TextMeshProUGUI qualityText;
-
     
     List<string> qualityOptions= new List<string> { "VERY LOW", "LOW", "MEDIUM", "HIGH", "VERY HIGH", "ULTRA" };
     
-    private int QualityIndex=4;
+    private int QualityIndex=2;
     private float masterVolumeMain;
     private float musicVolumeMain;
     private float soundVolumeMain;
@@ -49,11 +39,7 @@ public class SettingsMenu : MonoBehaviour
     private float defaultMasterVolumeMain=0;
     private float defaultMusicVolumeMain=0;
     private float defaultSoundVolumeMain=0;
-    private float defaultMouseSensitivity = 250f;
-
-
-    public static float mouseSensitivity;
-
+    
  
 
 
@@ -63,25 +49,12 @@ public class SettingsMenu : MonoBehaviour
         
         
         LoadSettings();
+        Debug.Log("The number of quality level is" + QualitySettings.count);
 
         
       
 
     }
-
-
-    //THIS IS THE FUNCTION TO DETERMINE THE SENSITITVITY OF THE MOUSE
-    public void SetSensitivity(float sensitivityValue)
-    {
-        mouseSensitivity= sensitivityValue;
-    }
-
-    //THis is the function to set the resolution 
-
-
-
-
-
 
 
 
@@ -142,33 +115,38 @@ public class SettingsMenu : MonoBehaviour
 
     //This is the function to set the quality level
 
-    public void ChooseQualityRight()
+    public void ChooseLowQuality()
     {
 
-        QualityIndex+=1;
+        QualityIndex=0;
 
-        if(QualityIndex>= qualityOptions.Count)
-        {
-            QualityIndex = 0;
-        }
+        
         SetQualityLevel(QualityIndex);
+        Debug.Log("The Current Quality of the graphics is " + QualitySettings.GetQualityLevel());
+       
     }
 
-    public void ChooseQualityLeft()
+    public void ChooseMediumQuality()
     {
-        QualityIndex-=1;
-        if (QualityIndex < 0)
-        {
-            QualityIndex = qualityOptions.Count-1;
-        }
+        QualityIndex=1;
+        
         SetQualityLevel(QualityIndex);
+        Debug.Log("The Current Quality of the graphics is " + QualitySettings.GetQualityLevel());
+
+    }
+
+    public void ChooseHighQuality()
+    {
+        QualityIndex = 2;
+
+        SetQualityLevel(QualityIndex);
+        Debug.Log("The Current Quality of the graphics is " + QualitySettings.GetQualityLevel());
+
     }
 
     public void SetQualityLevel(int quality)
     {
         QualitySettings.SetQualityLevel(quality);
-        qualityText.text= qualityOptions[quality];
-
 
     }
 
@@ -182,10 +160,7 @@ public class SettingsMenu : MonoBehaviour
         PlayerPrefs.SetFloat("masterVolume", masterVolumeMain);
         PlayerPrefs.SetFloat("soundVolume", soundVolumeMain);
         PlayerPrefs.SetFloat("musicVolume", musicVolumeMain);
-        PlayerPrefs.SetFloat("mouseSensitivity", mouseSensitivity);
-
-        Debug.Log("The Mouse Sensitivity is " + mouseSensitivity);
-
+       
     }
 
     private void GetLoadSettings()
@@ -202,13 +177,10 @@ public class SettingsMenu : MonoBehaviour
         masterVolumeMain = PlayerPrefs.GetFloat("masterVolume", defaultMasterVolumeMain);
         soundVolumeMain = PlayerPrefs.GetFloat("soundVolume", defaultSoundVolumeMain);
         musicVolumeMain = PlayerPrefs.GetFloat("musicVolume", defaultMusicVolumeMain);
-        mouseSensitivity = PlayerPrefs.GetFloat("mouseSensitivity", defaultMouseSensitivity);
-
-
+    
         masterSlider.value= masterVolumeMain;
         musicSlider.value= musicVolumeMain;
         soundSlider.value= soundVolumeMain;
-        mouseSensitivitySlider.value= mouseSensitivity;
 
 
         audioMixer.SetFloat("masterVolume", masterVolumeMain);
