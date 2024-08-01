@@ -37,7 +37,9 @@ public class PowerupSpawner : MonoBehaviour
         },
         obj =>
         {
+            obj.GetComponent<PowerUp>().canActivateTank = false;
             obj.SetActive(false);
+
         },
         obj =>
         {
