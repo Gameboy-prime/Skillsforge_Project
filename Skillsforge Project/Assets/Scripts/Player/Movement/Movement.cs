@@ -19,7 +19,7 @@ public class Movement : MonoBehaviour
 
     private bool canSwipe;
 
-    private bool isMoving;
+    public static bool isMoving;
     [SerializeField] Animator anime;
 
     [SerializeField] float speed=10f;
@@ -190,10 +190,10 @@ public class Movement : MonoBehaviour
 
     public void Slide(float value)
     {
-        if (!EndGame.endGame)
+        if (!EndGame.endGame && !CloneMultiplier.isDead)
         {
 
-            anime.Play("Strafe");
+            isMoving=true;
             Vector3 target = new Vector3(value, 0, 0);
             StartCoroutine(MoveToTargetSlider(target,value));
         }
@@ -230,12 +230,16 @@ public class Movement : MonoBehaviour
         
         Vector3 target = targetPosition;
 
+        //check to see if the slide value is greater or lesser than the previous one
+        //so as to know if it is moving to the left or right
+
         if(value> previousSlideValue)
         {
+            anime.Play("Right");
             //Move to the right
             while (transform.position.x < target.x)
             {
-                Vector3 newPos = transform.position + new Vector3(.5f, 0, 0);
+                Vector3 newPos = transform.position + new Vector3(.08f, 0, 0);
                 transform.position = newPos;
 
                 
@@ -246,10 +250,11 @@ public class Movement : MonoBehaviour
         }
         else
         {
+            anime.Play("Left");
             //Move to the left
             while (transform.position.x > target.x)
             {
-                Vector3 newPos = transform.position + new Vector3(-.5f, 0, 0);
+                Vector3 newPos = transform.position + new Vector3(-.08f, 0, 0);
                 transform.position = newPos;
 
 
@@ -258,10 +263,11 @@ public class Movement : MonoBehaviour
         }
 
         previousSlideValue=value;
-
+        isMoving = false;
+        anime.SetTrigger("stopStrafing");
        
         transform.position = target;
-        isMoving = false;
+        
     }
 
 
